@@ -1,0 +1,8 @@
+
+In notification:
+    - i replace it in userModel
+
+- When the user be infected, i should notify all users their has the userID in metUnInfectedUsers
+
+router.get('/uninfected/check-withinday')
+>> check the uninfected users within a day, i think it will be removed because the previose step

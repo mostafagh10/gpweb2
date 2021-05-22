@@ -1,0 +1,112 @@
+firebaseload (index.js)
+------------------------
+import firebase from 'firebase/app'
+import 'firebase/storage'
+
+var config = {
+    apiKey: "AIzaSyCZpAQyExCuENk_2RFAVZ2BLwXCiqj7bMQ",
+    authDomain: "react-drawer.firebaseapp.com",
+    databaseURL: "https://react-drawer.firebaseio.com",
+    projectId: "react-drawer",
+    storageBucket: "react-drawer.appspot.com",
+    messagingSenderId: "796755797467"
+  };
+  firebase.initializeApp(config);
+  
+  const storage = firebase.storage();
+  
+  export {
+      storage, firebase as default
+  }
+
+-----------------------------------------------------------------------------------
+index.js
+----------
+import {React , Component} from 'react'
+import {Link} from 'react-router-dom'
+import {storage} from '../firebaseload'
+import './style.css'
+class Design extends Component {
+
+  state = {
+    name:'',
+    image : null,
+    url : ''
+  }
+
+  handlevalue = (e) => {
+    this.setState({
+        //name : e.target.value,
+        //age : e.target.value
+        [e.target.id] : e.target.value
+    })
+}
+
+  handlechange = (e) => {
+    if(e.target.files[0]){
+      const image = e.target.files[0];
+      this.setState(({image}))
+      console.log(this.state.image)
+    }
+  }
+
+  handleupload = () => {
+    const {image} = this.state;
+    const uploadtask = storage.ref(`images/${image.name}`).put(image)
+    uploadtask.on('state_changed',
+    (snapshot) => {
+
+    }, 
+    (error) => {
+      console.log(error)
+    } , 
+    () => {
+      storage.ref('images').child(image.name).getDownloadURL().then(url => {
+        console.log(url);
+        this.setState({url})
+      })
+    })
+  }
+
+  handlesubmit = () => {
+    this.props.add(this.state);
+    console.log(this.state)
+    this.setState({
+      name:'',
+      image : null,
+      url : ''
+    })
+}
+
+returnempty = () => {
+  this.setState({
+    name:'',
+    image : null,
+    url : ''
+  })
+}
+  render(){
+  const x = !this.state.name || !this.state.image || !this.state.url;
+  return (
+    <div className="Design">
+      <div className="container">
+      <h4>DESIGN PHASE DOCUMENT</h4>
+        <label>FILE NAME</label>
+        &nbsp; &nbsp; &nbsp;
+        <input type="text" id="name" onChange={this.handlevalue} value={this.state.name} />
+        <br />
+        <input type="file" onChange={this.handlechange} />
+        <button onClick={this.handleupload}>BROWSE IMAGE</button><br />
+        <img src={this.state.url} height="200" width="200" /><br /><br />
+        <Link to="/"><button onClick={this.handlesubmit} disabled={x}>SAVE</button></Link>
+        &nbsp; &nbsp; &nbsp;
+        <button onClick={this.returnempty}>RESET</button>
+        &nbsp; &nbsp; &nbsp;
+        <Link to="/"><button>CLOSE</button></Link>
+      </div>
+    </div>
+   );
+  }
+}
+
+export default Design;
