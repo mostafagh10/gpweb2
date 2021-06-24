@@ -1,68 +1,108 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## API
 
-## Available Scripts
+### main route: /user/admin
 
-In the project directory, you can run:
+To get all admins: GET /
+  - need an authenticated admin to perform it
 
-### `npm start`
+To get an admin: GET /me
+  - need an authenticated admin to perform it
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To add a new admin: POST /signup
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+To login as an admin: POST /login
 
-### `npm test`
+To edit an admin: PATCH /me
+  - need an authenticated admin to perform it
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To delete an admin: DELTE /me
+  - need an authenticated admin to perform it
 
-### `npm run build`
+To logout from a device: POST /logout
+  - need an authenticated admin to perform it
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To logout from all devices: POST /logout-all
+  - need an authenticated admin to perform it
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### main route: /user/client
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To get all users: GET /
+  - need an authenticated admin to perform it
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To get an user: GET /:id
+  - need an authenticated admin to perform it
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To edit an user: PATCH /:id
+  - need an authenticated admin to perform it
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To delete an user: DELETE /:id
+  - need an authenticated admin to perform it
 
-## Learn More
+To get an user: GET /me
+  - need an authenticated user to perform it
+  
+To edit an user: PATCH /me
+  - need an authenticated user to perform it
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To delete an user: DELTE /me
+  - need an authenticated user to perform it
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To add a new user: POST /signup
 
-### Code Splitting
+To login as an user: POST /login
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+To logout from a device: POST /logout
+  - need an authenticated user to perform it
 
-### Analyzing the Bundle Size
+To logout from all devices: POST /logout-all
+  - need an authenticated user to perform it
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+To add infected patient: PATCH /infected/:id
+  - need an authenticated admin to perform it
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### main route: /news
 
-### Advanced Configuration
+To get all news: GET /
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+To get a news: GET /:id
 
-### Deployment
+To add a new news: POST /
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+To edit news: PATCH /:id
 
-### `npm run build` fails to minify
+To delete news: DELTE /:id
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### main route: /advice
+
+To get all advices: GET /
+
+To get an advice: GET /:id
+
+To add a new advice: POST /
+
+To edit an advice: PATCH /:id
+
+To delete an advice: DELTE /:id
+
+### main route: /user/client/notification
+
+To get an notification: GET /:id
+  - need an authenticated user to perform it
+
+To add a new notification: POST /
+  - need an authenticated user to perform it
+
+### for forget password : POST /user/client/password/forget
+ - write an email to send verification code to your email
+
+ ### write the email and verification code : POST /user/client/password/code/verification
+
+ -write your email and the verification code
+
+ ### change password : POST /user/client/password/reset
+
+ -write email and password and confirm password
