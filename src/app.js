@@ -1,4 +1,3 @@
-
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -29,9 +28,12 @@ app.use((req, res, next)=>{
 // Routers
 const adminRouter = require('./routers/admin.router')
 const userRouter = require('./routers/user.router')
+const userRouter2 = require('./routers/user2.router')
 const newsRouter = require('./routers/news.router')
 const adviceRouter = require('./routers/advice.router')
 const notificationRouter = require('./routers/notification.router')
+const conversationRoute = require("./routers/conversation")
+const messageRoute = require("./routers/message")
 
 
 // Routes
@@ -40,6 +42,8 @@ app.use('/user/client', userRouter)
 app.use('/news', newsRouter)
 app.use('/advice', adviceRouter)
 app.use('/user/client/notification', notificationRouter)
+app.use("/conversations", conversationRoute);
+app.use("/messages", messageRoute);
 
 
 // No route matched, 404 not found

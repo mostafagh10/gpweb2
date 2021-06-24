@@ -1,5 +1,6 @@
 
 const User = require('../models/user.model')
+const { generateToken } = require('../Utils/Helpers')
 
 const getUsers = async (req, res) => {
     try {
@@ -24,7 +25,12 @@ const getUserByAdmin = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-    res.status(200).send(req.user)
+    //res.status(200).send(req.user)
+    try {
+        res.status(200).send(req.user)
+      } catch (error) {
+        res.status(500).send({ error: error.message })
+    }
 }
 
 const signup = async (req, res) => {
@@ -70,11 +76,13 @@ const logoutFromAllDevices = async (req, res) => {
 
 const editUserByAdmin = async (req, res) => {
     const updates = Object.keys(req.body)
+    /*
     const allowedUpdates = [] // allowed updates for admin
     const isAllowed = updates.every(update => allowedUpdates.includes(update))
     if (!isAllowed) {
         throw new Error()
     }
+    */
     const id = req.params.id
     try {
         const user = await User.findById(id)
@@ -199,7 +207,6 @@ const addUnInfectedUser = async (req, res)=>{
         res.status(500).send({ error: error.message })
     }
 }
-
 module.exports = {
     getUsers,
     getUserByAdmin,

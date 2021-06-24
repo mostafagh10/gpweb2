@@ -1,8 +1,8 @@
 
 const mongoose = require('mongoose')
 const validator = require('validator')
-const bcrypt = require('bcryptjs')
 const JWT = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -29,13 +29,13 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, 'password is required!'],
-        minlength: 6,
-        select: false
+        minlength: 6
     },
     isInfected:{
         type: Boolean,
         default: false
     },
+    /*
     metUnInfectedUsers: [{ // Array of users
         unInfectedUserID:{
             type: mongoose.Schema.Types.ObjectId,
@@ -51,6 +51,7 @@ const userSchema = mongoose.Schema({
             default: new Date().toLocaleString()
         }
     }],
+    */
     city: {
         type: String,
         required: [true, 'city is required!'],
@@ -103,7 +104,15 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    changePassword: { // when reset pass it will be true, otherwise will be false
+      type: Boolean,
+      default: false
+    },
+    verificationCode:{
+      type: String,
+      default: undefined,
+    },
 }, {
     timestamps: true
 });
@@ -137,9 +146,9 @@ userSchema.statics.findByCredentials = async (email, password)=>{
     if(!user){
         throw new Error('Unable to login!')
     }
-    const isMatched = await bcrypt.compare(user.password, password)
+    const isMatched = await bcrypt.compare(password , user.password)
     if(!isMatched) {
-        throw new Error('Unable to login!')
+        throw new Error('Unable to login ... password is incorrect!')
     }
     return user
 }

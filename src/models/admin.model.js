@@ -35,7 +35,15 @@ const adminSchema = mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    changePassword: { // when reset pass it will be true, otherwise will be false
+      type: Boolean,
+      default: false
+    },
+    verificationCode:{
+      type: String,
+      default: undefined,
+    },
 },{
     timestamps: true
 });

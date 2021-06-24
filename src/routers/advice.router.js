@@ -43,13 +43,18 @@ router.post('/', async (req, res) => {
 
 // to edit an advice
 router.patch('/:id', async (req, res) => {
+    /*
     const updates = Object.keys(req.body)
     const allowedUpdates = []
     const isAllowed = updates.every(update => allowedUpdates.includes(update))
     if(!isAllowed){
         throw new Error()
     }
+    */
+    const updates = Object.keys(req.body)
     const {id} = req.params
+    console.log("req.body : ",req.body)
+    console.log("id : ",id)
     try {
         const advice = await Advice.findById(id)
         if(!advice){
